@@ -1,0 +1,51 @@
+﻿@page
+@model AirplaneTicketsReservationApp.Pages.Flights.flightsModel
+@{
+    ViewData["Title"] = "flights";
+}
+
+<br />
+<h2>flights</h2>
+<a class="btn btn-primary btn-sm" href="/Flights/Create">Add Flight</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Departure date</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Number of transfers</th>
+            <th>Number of seats</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.flightList)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.departureDate</td>
+                <td>@item.departure.ToString()</td>
+                <td>@item.arrival.ToString()</td>
+                <td>@item.numberOfTransfers</td>
+                @if (item.numberOfSeats > 5)
+                {
+                    <td>@item.numberOfSeats</td>
+
+                }
+                else
+                {
+                    <td class="label-warning">@item.numberOfSeats</td>
+                }
+                <td>
+                    @*@if(userType.user_type == 1)
+                    {
+
+
+                    }*@
+                    <a class="btn btn-danger btn-sm" href="/Flights/Delete?id=@item.id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

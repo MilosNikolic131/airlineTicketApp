@@ -1,0 +1,39 @@
+﻿@page
+@model AirplaneTicketsReservationApp.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+<div class="container border" style="padding:20px">
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="form-group-row">
+            <div class="col-3">
+                <label asp-for="userType.username"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="userType.username" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="userType.username"></span>
+        </div>
+
+        <div class="form-group-row">
+            <div class="col-3">
+                <label asp-for="userType.password"></label>
+            </div>
+            <div class="col-5">
+                <input type="password" asp-for="userType.password" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="userType.password"></span>
+        </div>
+
+        <div class="form-group-row">
+            <div class="col-3">
+                <input type="submit" class="btn btn-primary" value="Login" />
+            </div>
+        </div>
+    </form>
+</div>
+

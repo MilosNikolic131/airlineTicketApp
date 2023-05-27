@@ -1,0 +1,63 @@
+﻿@page
+@model AirplaneTicketsReservationApp.Pages.Flights.CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<br />
+<h2>Create</h2>
+
+
+
+<form method="post">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Departure date and time</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="departureDate" value="@Model.flight.departureDate" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Departure</label>
+        <div class="col-sm-6">
+            <select class="form-control" name="departure" value="@Model.flight.departure"
+                    asp-items="Html.GetEnumSelectList<DestinationEnum>()">
+                @*<option>Select destination ...</option>*@
+            </select>
+        </div>
+    </div>
+    @*<div class="col-sm-6">
+        <input type="text" class="form-control" name="departure" value="@Model.flight.departure" />
+        </div>*@
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Arrival</label>
+        <div class="col-sm-6">
+            <select class="form-control" name="arrival" value="@Model.flight.arrival"
+                    asp-items="Html.GetEnumSelectList<DestinationEnum>()">
+                @*<option>Select destination ...</option>*@
+            </select>
+            @*<input type="text" class="form-control" name="arrival" value="@Model.flight.arrival" />*@
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Number of transfers</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="numberOfTransfers" value="@Model.flight.numberOfTransfers" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Number of seats</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="numberOfSeats" value="@Model.flight.numberOfSeats" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="offset-mb-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
