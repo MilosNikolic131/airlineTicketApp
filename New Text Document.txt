@@ -1,0 +1,38 @@
+CREATE TABLE user_type (
+    id int NOT NULL,
+    typeName varchar(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE userTable (
+    id int NOT NULL,
+    givenName varchar(255) ,
+	surname varchar(255) ,
+	typeId int NOT NULL,
+	username varchar(255) NOT NULL,
+	password varchar(255) NOT NULL,
+    PRIMARY KEY (id),
+	FOREIGN KEY (typeId) REFERENCES user_type(id)
+);
+
+CREATE TABLE flight (
+    id int NOT NULL,
+    departureDate DateTime NOT NULL,
+	departure varchar(255) NOT NULL,
+	arrival varchar(255) NOT NULL,
+	numberOfTransfers int NOT NULL,
+	numberOfSeats int NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE reservation (
+    idFlight int NOT NULL,
+	idUser int NOT NULL,
+	numberOfSeats int NOT NULL,
+    PRIMARY KEY (idFlight, idUser)
+);
+
+INSERT INTO flight (id, departureDate,departure,arrival,numberOfTransfers,numberOfSeats)
+VALUES ( 1, '2023-02-02 12:00:00', 'Podgorica', 'Beograd', 0, 50),
+(2, '2023-04-02 12:00:00', 'Nis', 'Beograd', 0, 60),
+(3, '2023-05-07 12:00:00', 'Pristina', 'Kraljevo', 0, 30)
