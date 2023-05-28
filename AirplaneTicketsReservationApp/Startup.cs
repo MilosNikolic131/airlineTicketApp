@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using AirplaneTicketsReservationApp.Models;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.AspNetCore.ResponseCompression;
+using AirplaneTicketsReservationApp.Hubs;
 
 namespace AirplaneTicketsReservationApp
 {
@@ -31,8 +36,17 @@ namespace AirplaneTicketsReservationApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
 
-
+            services.AddSignalR(); 
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[]
+                    {
+                        "application/octet-stream"
+                    });
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -47,13 +61,18 @@ namespace AirplaneTicketsReservationApp
             {
                 app.UseExceptionHandler("/Error");
             }
+            app.UseSignalR(route =>
+            {
+                route.MapHub<ReservationHub>("/reservationHub");
+            });
 
+           
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc();
 
-            app.UseAuthentication();
             //app.UseAuthorization();
         }
     }

@@ -1,0 +1,45 @@
+﻿@page
+@model AirplaneTicketsReservationApp.Pages.Flights.RezervationsModel
+@{
+    ViewData["Title"] = "Rezervations";
+}
+
+@section Scripts{ 
+
+}
+
+<h2>Rezervations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Flight id</th>
+            <th>User ID</th>
+            <th>Number of seats</th>
+            <th>Approved</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.reservations)
+        {
+            <tr>
+                <td>@item.flightId</td>
+                <td>@item.userId</td>
+                <td>@item.numberOfSeats</td>
+                @if (item.approved == 0)
+                {
+                    <td>Not approved</td>
+
+                }
+                else
+                {
+                    <td>Approved</td>
+                }
+                <td>
+                   
+                    <a class="btn btn-danger btn-sm" href="/Flights/Approve?id=@item.flightId  ">Approve</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
