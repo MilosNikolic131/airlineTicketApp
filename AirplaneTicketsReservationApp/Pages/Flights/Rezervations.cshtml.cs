@@ -24,9 +24,10 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
         public async Task NewReservationReceived(Reservation _reservation)
         {
             await hubContext.Clients.All.SendAsync("NewReservationReceived", _reservation);
+            reservations.Add(_reservation);
         }
 
-            public void OnGet()
+        public void OnGet()
         {
             try
             {
@@ -62,5 +63,18 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
 
             }
         }
+
+        //public async Task OnGetAsync()
+        //{
+
+
+            
+        //    Reservation reservationAsync = new Reservation();
+        //    await this.NewReservationReceived(reservationAsync);
+
+        //    //reservations.Add(reservationAsync);
+
+        //    //return RedirectToPage("/Flights/Rezervations");
+        //}
     }
 }

@@ -1,11 +1,11 @@
-﻿"use strickt";
+﻿"use strict";
 
-const { signalR } = require("../lib/@aspnet/signalr/dist/browser/signalr");
+//const { signalR } = require("../lib/@aspnet/signalr/dist/browser/signalr");
 
-var connection = new SignalR.HubConnectionBuilder().withUrl("/reservationhub")
-    .configureLogging(SignalR.LogLevel.Information).build();
+//var connection = new SignalR.HubConnectionBuilder().withUrl("/reservationhub")
+//    .configureLogging(SignalR.LogLevel.Information).build();
 
-/*$(document).ready(() => {*/
+$(document).ready(() => {
 
     let reservations = [];
     let $resBody = $("resBody");
@@ -39,13 +39,14 @@ var connection = new SignalR.HubConnectionBuilder().withUrl("/reservationhub")
         $resBody.append($template);
     }
 
+    client.start();
 
-/*})*/
+})
 
-connection.on("NewReservationReceived", function (_reservation) {
-    addReservation(newReservation);
-});
+//connection.on("NewReservationReceived", function (_reservation) {
+//    addReservation(newReservation);
+//});
 
-connection.start().catch(function err() {
-    return console.error(err.toString());
-});
+//connection.start().catch(function err() {
+//    return console.error(err.toString());
+//});

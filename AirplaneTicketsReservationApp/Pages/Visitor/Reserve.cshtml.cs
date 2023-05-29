@@ -17,6 +17,12 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
 
         public Reservation reservation = new Reservation();
         public IHubContext<ReservationHub> hubContext;
+
+        public ReserveModel(IHubContext<ReservationHub> _hubContext)
+        {
+            this.hubContext = _hubContext;
+        }
+
         public void OnGet()
         {
             String id = Request.Query["id"];
@@ -57,6 +63,8 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
                 Console.WriteLine(ex.ToString());
                 return;
             }
+
+            
         }
 
         public async Task OnPostAsync()
