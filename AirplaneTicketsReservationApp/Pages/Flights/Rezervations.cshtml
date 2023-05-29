@@ -4,11 +4,13 @@
     ViewData["Title"] = "Rezervations";
 }
 
-@section Scripts{ 
+@section Scripts{
 
+    <script src="~/js/signalr.js"></script>
+    <script src="~/js/ReservationHub.js"></script>
 }
 
-<h2>Rezervations</h2>
+<h2>Reservations</h2>
 
 <table class="table">
     <thead>
@@ -19,27 +21,27 @@
             <th>Approved</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="resBody">
         @foreach (var item in Model.reservations)
-        {
-            <tr>
-                <td>@item.flightId</td>
-                <td>@item.userId</td>
-                <td>@item.numberOfSeats</td>
-                @if (item.approved == 0)
                 {
-                    <td>Not approved</td>
+                    <tr>
+                        <td>@item.flightId</td>
+                        <td>@item.userId</td>
+                        <td>@item.numberOfSeats</td>
+                        @if (item.approved == 0)
+                        {
+                            <td>Not approved</td>
 
+                        }
+                        else
+                        {
+                            <td>Approved</td>
+                        }
+                        <td>
+
+                            <a class="btn btn-danger btn-sm" href="/Flights/Approve?id=@item.flightId  ">Approve</a>
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <td>Approved</td>
-                }
-                <td>
-                   
-                    <a class="btn btn-danger btn-sm" href="/Flights/Approve?id=@item.flightId  ">Approve</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+            </tbody>
 </table>
