@@ -74,6 +74,8 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
             reservation.numberOfSeats = int.Parse(Request.Form["numberOfSeats"]);
             reservation.approved = int.Parse("0");
 
+            
+
             string connectionString = "Data Source=.\\SQLEXPRESS2;Initial Catalog=airlineDB;Integrated Security=True";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -103,7 +105,7 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
 
             }
 
-           await hubContext.Clients.All.SendAsync("NewReservationReceived", reservation);
+            await hubContext.Clients.All.SendAsync("NewReservationReceived", reservation);
 
         }
     }

@@ -27,6 +27,7 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
             reservations.Add(_reservation);
         }
 
+
         public void OnGet()
         {
             try
