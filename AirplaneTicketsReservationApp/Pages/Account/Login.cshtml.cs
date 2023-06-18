@@ -34,7 +34,7 @@ namespace AirplaneTicketsReservationApp.Pages.Account
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT * FROM user_type";
+                    String sql = "SELECT * FROM userTable";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -49,12 +49,30 @@ namespace AirplaneTicketsReservationApp.Pages.Account
                                 user.username = reader.GetString(4);
                                 user.password = reader.GetString(5);
 
-                                if(user.username == userType.username && user.password == userType.password)
+                                if(user.username == userType.username && user.password == userType.password && user.type == UserTypeEnum.Agent)
                                 {
                                     userType = user;
                                     var claims = new List<Claim> {
                                         new Claim(ClaimTypes.Name, user.Name),
-                                        new Claim(ClaimTypes.Surname, user.Surname)
+                                        new Claim(ClaimTypes.Surname, user.Surname),
+                                        new Claim("Type", "Agent")
+                                    };
+                                    var identity = new ClaimsIdentity(claims, "AirlineCookieAuth");
+                                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+
+                                    await HttpContext.SignInAsync("AirlineCookieAuth", claimsPrincipal);
+
+                                    return RedirectToPage("/Index");
+                                }
+
+                                if (user.username == userType.username && user.password == userType.password && user.type == UserTypeEnum.Admin)
+                                {
+                                    userType = user;
+                                    var claims = new List<Claim> {
+                                        new Claim(ClaimTypes.Name, user.Name),
+                                        new Claim(ClaimTypes.Surname, user.Surname),
+                                        new Claim("Type", "Admin"),
+                                        new Claim("Type", "Agent")
                                     };
                                     var identity = new ClaimsIdentity(claims, "AirlineCookieAuth");
                                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
@@ -97,6 +115,6 @@ namespace AirplaneTicketsReservationApp.Pages.Account
 
     public enum UserTypeEnum
     {
-        admin, visitor, agent
+        Admin, Visitor, Agent
     }
 }

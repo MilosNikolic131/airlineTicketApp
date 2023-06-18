@@ -8,9 +8,11 @@ using AirplaneTicketsReservationApp.Models;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.SignalR;
 using AirplaneTicketsReservationApp.Hubs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AirplaneTicketsReservationApp.Pages.Flights
 {
+    [Authorize( Policy = "MustBeAgent")]
     public class RezervationsModel : PageModel
     {
         public List<Reservation> reservations = new List<Reservation>();

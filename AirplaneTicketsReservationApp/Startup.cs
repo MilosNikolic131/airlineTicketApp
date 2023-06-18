@@ -13,6 +13,11 @@ using AirplaneTicketsReservationApp.Models;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.AspNetCore.ResponseCompression;
 using AirplaneTicketsReservationApp.Hubs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
+
 
 namespace AirplaneTicketsReservationApp
 {
@@ -28,7 +33,16 @@ namespace AirplaneTicketsReservationApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication().AddCookie("AirlineCookieAuth", options => { options.Cookie.Name = "AirlineCookieAuth"; });
+            services.AddAuthentication("AirlineCookieAuth").AddCookie("AirlineCookieAuth", options => {
+                options.Cookie.Name = "AirlineCookieAuth";
+                options.LoginPath = "/Account/Login";
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustBeAgent", policy => policy.RequireClaim("Type", "Agent"));
+                options.AddPolicy("MustBeAdmin", policy => policy.RequireClaim("Type", "Admin"));
+            });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -73,7 +87,6 @@ namespace AirplaneTicketsReservationApp
 
             app.UseMvc();
 
-            //app.UseAuthorization();
         }
     }
 }

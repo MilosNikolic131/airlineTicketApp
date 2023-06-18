@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AirplaneTicketsReservationApp.Pages.Flights
 {
+    [Authorize(Policy = "MustBeAgent")]
     public class flightsModel : PageModel
     {
         public List<Flight> flightList = new List<Flight>();
