@@ -1,0 +1,37 @@
+﻿@page
+@model AirplaneTicketsReservationApp.Pages.Visitor.VisitorPageModel
+@{
+    Layout = null;
+}
+
+<br />
+<h2>Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>FlightId</th>
+            <th>Number of seats</th>
+            <th>Approved</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.reservations)
+        {
+            <tr>
+                <td>@item.flightId</td>
+                <td>@item.numberOfSeats</td>
+                @if (item.approved == 1)
+                {
+                    <td>Approved</td>
+
+                }
+                else
+                {
+                    <td>Not approved</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

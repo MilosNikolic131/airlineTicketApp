@@ -39,26 +39,23 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
 
                 connection.Open();
 
-                String sql3 = "SELECT * from flight where arrival ='" + flight.arrival + "' AND departure='" + flight.departure + "' AND flightDate = '" + flight.departureDate + "'";
-                //using (SqlCommand command3 = new SqlCommand(sql3, connection))
-                //{
-                //    using (SqlDataReader reader = command3.ExecuteReader())
-                //    {
-                //        while (reader.Read())
-                //        {
-                //            DestinationEnum departure = Enum.Parse<DestinationEnum>(reader.GetString(2));
-                //            DestinationEnum arrival = Enum.Parse<DestinationEnum>(reader.GetString(3));
-                //            DateTime flightDate = reader.GetDateTime(1);
+                String sql3 = "SELECT * from flight where arrival ='" + flight.arrival + "' AND departure='" + flight.departure + "' AND departureDate = '" + flight.departureDate + "'";
+                using (SqlCommand command3 = new SqlCommand(sql3, connection))
+                {
+                    using (SqlDataReader reader = command3.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int flightId = reader.GetInt32(0);
+                            if (flightId == null && flightId == 0)
+                            {
+                                throw new Exception("Flight already exists for this date and destination!");
 
-                //            if(flight.departure == departure && flight.arrival == arrival && 
-                //                flight.departureDate == flightDate)
-                //            {
+                            }
+                        }
 
-                //                return;
-                //            }
-                //        }
-
-                //    }
+                    }
+                }
 
                     String sql = "SELECT max(id) FROM flight";
                     using (SqlCommand command = new SqlCommand(sql, connection))
@@ -83,8 +80,8 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
                         {
                             command2.Parameters.AddWithValue("@id", flight.id);
                             command2.Parameters.AddWithValue("@departureDate", flight.departureDate);
-                            command2.Parameters.AddWithValue("@departure", flight.departure);
-                            command2.Parameters.AddWithValue("@arrival", flight.arrival);
+                            command2.Parameters.AddWithValue("@departure", flight.departure.ToString());
+                            command2.Parameters.AddWithValue("@arrival", flight.arrival.ToString());
                             command2.Parameters.AddWithValue("@numberOfTransfers", flight.numberOfTransfers);
                             command2.Parameters.AddWithValue("@numberOfSeats", flight.numberOfSeats);
 

@@ -6,29 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AirplaneTicketsReservationApp.Models;
 using System.Data.SqlClient;
-using Microsoft.AspNetCore.SignalR;
-using AirplaneTicketsReservationApp.Hubs;
-using Microsoft.AspNetCore.Authorization;
 
-namespace AirplaneTicketsReservationApp.Pages.Flights
+namespace AirplaneTicketsReservationApp.Pages.Visitor
 {
-    [Authorize( Policy = "MustBeAgent")]
-    public class RezervationsModel : PageModel
+    public class VisitorPageModel : PageModel
     {
         public List<Reservation> reservations = new List<Reservation>();
-        public readonly IHubContext<ReservationHub> hubContext;
-
-        public RezervationsModel(IHubContext<ReservationHub> _hubContext)
-        {
-            this.hubContext = _hubContext;
-        }
-
-        public async Task NewReservationReceived(Reservation _reservation)
-        {
-            await hubContext.Clients.All.SendAsync("NewReservationReceived", _reservation);
-            reservations.Add(_reservation);
-        }
-
 
         public void OnGet()
         {
@@ -39,7 +22,8 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT * FROM reservation";
+                    string userId = HttpContext.User.FindFirst("ID")?.Value;
+                    String sql = "SELECT * FROM reservation WHERE idUser = " + userId;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -51,7 +35,6 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
                                 reservation.userId = reader.GetInt32(1);
                                 reservation.numberOfSeats = reader.GetInt32(2);
                                 reservation.approved = reader.GetInt32(3);
-
 
                                 reservations.Add(reservation);
                             }
@@ -66,6 +49,6 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
 
             }
         }
-
     }
+    
 }

@@ -11,6 +11,11 @@
 <form method="post">
     Departure <input type="text" name="_from" />
     Arrival <input type="text" name="_to" />
+    Transfers <select name="_transfers">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+    @*Transfers <input type="checkbox" name="_transfers" value="" checked="checked" />*@
     <input type="submit" class="btn btn-success" />
     <a asp-page="/Visitor/Browse">Get all records</a>
 </form>
@@ -28,25 +33,25 @@
     <tbody>
         @foreach (var item in Model.results)
         {
-        <tr>
-            <td>@item.id</td>
-            <td>@item.departureDate</td>
-            <td>@item.departure.ToString()</td>
-            <td>@item.arrival.ToString()</td>
-            <td>@item.numberOfTransfers</td>
-            @if (item.numberOfSeats > 5)
-            {
-                <td>@item.numberOfSeats</td>
+            <tr>
+                <td>@item.id</td>
+                <td>@item.departureDate</td>
+                <td>@item.departure.ToString()</td>
+                <td>@item.arrival.ToString()</td>
+                <td>@item.numberOfTransfers</td>
+                @if (item.numberOfSeats > 5)
+                {
+                    <td>@item.numberOfSeats</td>
 
-            }
-            else
-            {
-                <td class="label-warning">@item.numberOfSeats</td>
-            }
-            <td>
-            <a class="btn btn-primary btn-sm" href="/Visitor/Reserve?id=@item.id">Reserve</a>
-            </td>
-        </tr>
+                }
+                else
+                {
+                    <td class="label-warning">@item.numberOfSeats</td>
+                }
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Visitor/Reserve?id=@item.id">Reserve</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

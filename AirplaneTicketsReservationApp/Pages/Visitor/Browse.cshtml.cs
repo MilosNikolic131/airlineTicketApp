@@ -63,11 +63,11 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
 
         }
 
-        public void OnPost(string _from, string _to)
+        public void OnPost(string _from, string _to,String _transfers)
         {
             //DestinationEnum departureFrom = Enum.Parse<DestinationEnum>(_from);
             //DestinationEnum to = Enum.Parse<DestinationEnum>(_to);
-
+            var test = _transfers;
 
             //results = (from x in _adb.flight where (x.departure == departureFrom) && (x.arrival == to) select x).ToList();
             results = new List<FlightClass>();
@@ -78,7 +78,13 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT * FROM flight WHERE departure = '" + _from + "' AND " + "arrival = '" + _to + "'";
+                    String sql;
+                    if (_transfers.Equals("yes"))
+                    {
+                    sql = "SELECT * FROM flight WHERE departure = '" + _from + "' AND " + "arrival = '" + _to + "'";
+
+                    }
+                    else sql = "SELECT * FROM flight WHERE departure = '" + _from + "' AND " + "arrival = '" + _to + "'" + " AND numberOfTransfers = 0";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())

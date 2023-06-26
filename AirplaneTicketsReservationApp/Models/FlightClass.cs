@@ -22,4 +22,9 @@ namespace AirplaneTicketsReservationApp.Models
     {
         Beograd, Nis, Kraljevo, Pristina
     }
+
+    public enum Transfers
+    {
+        Yes, No
+    }
 }

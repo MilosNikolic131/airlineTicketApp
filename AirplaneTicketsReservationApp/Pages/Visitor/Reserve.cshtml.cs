@@ -26,45 +26,12 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
         public void OnGet()
         {
             String id = Request.Query["id"];
+            reservation.flightId = int.Parse(id);
 
-            try
-            {
-                string connectionString = "Data Source=.\\SQLEXPRESS2;Initial Catalog=airlineDB;Integrated Security=True";
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    try
-                    {
-                        String sql2 = "SELECT * FROM flight";
-                        using (SqlCommand command2 = new SqlCommand(sql2, connection))
-                        {
-                            using (SqlDataReader reader = command2.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    reservation.flightId = reader.GetInt32(0);
-                                  
-                                }
-                            }
-                        }
+            string userId = HttpContext.User.FindFirst("ID")?.Value;
 
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                        return;
-                    }
+            reservation.userId = int.Parse(userId);
 
-                }
-
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return;
-            }
-
-            
         }
 
         public async Task OnPostAsync()
@@ -74,14 +41,29 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
             reservation.numberOfSeats = int.Parse(Request.Form["numberOfSeats"]);
             reservation.approved = int.Parse("0");
 
-            
-
             string connectionString = "Data Source=.\\SQLEXPRESS2;Initial Catalog=airlineDB;Integrated Security=True";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 try
                 {
+                    String sql = "SELECT * from flight WHERE flightId = " + reservation.flightId;
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            { 
+                                DateTime departureDateTime = reader.GetDateTime(1);
+
+                                if((DateTime.Now - departureDateTime).Days <= 3)
+                                {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
                     String sql2 = "INSERT INTO reservation " +
                         "(idFlight, idUser, numberOfSeats, approved)"
                         + " VALUES " + "(@idFlight, @idUser, @numberOfSeats, @approved);";

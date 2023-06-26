@@ -53,8 +53,9 @@ namespace AirplaneTicketsReservationApp.Pages.Account
                                 {
                                     userType = user;
                                     var claims = new List<Claim> {
-                                        new Claim(ClaimTypes.Name, user.Name),
-                                        new Claim(ClaimTypes.Surname, user.Surname),
+                                        new Claim("ID", user.id.ToString()),
+                                        //new Claim(ClaimTypes.Name, user.Name),
+                                        //new Claim(ClaimTypes.Surname, user.Surname),
                                         new Claim("Type", "Agent")
                                     };
                                     var identity = new ClaimsIdentity(claims, "AirlineCookieAuth");
@@ -69,8 +70,9 @@ namespace AirplaneTicketsReservationApp.Pages.Account
                                 {
                                     userType = user;
                                     var claims = new List<Claim> {
-                                        new Claim(ClaimTypes.Name, user.Name),
-                                        new Claim(ClaimTypes.Surname, user.Surname),
+                                        new Claim("ID", user.id.ToString()),
+                                        //new Claim(ClaimTypes.Name, user.Name),
+                                        //new Claim(ClaimTypes.Surname, user.Surname),
                                         new Claim("Type", "Admin"),
                                         new Claim("Type", "Agent")
                                     };
