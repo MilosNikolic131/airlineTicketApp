@@ -38,12 +38,12 @@
                     <td class="label-warning">@item.numberOfSeats</td>
                 }
                 <td>
-                    @*@if(userType.user_type == 1)
+                    @if (Model.userType == "Admin")
                     {
+                        <a class="btn btn-danger btn-sm" href="/Flights/Delete?id=@item.id">Delete</a>
 
 
-                    }*@
-                    <a class="btn btn-danger btn-sm" href="/Flights/Delete?id=@item.id">Delete</a>
+                    }
                 </td>
             </tr>
         }

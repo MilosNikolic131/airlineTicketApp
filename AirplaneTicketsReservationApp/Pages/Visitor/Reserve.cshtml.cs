@@ -36,8 +36,8 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
 
         public async Task OnPostAsync()
         {
-            reservation.flightId = int.Parse(Request.Form["flightId"]);
-            reservation.userId = int.Parse(Request.Form["userId"]);
+            //reservation.flightId = int.Parse(Request.Form["flightId"]);
+            //reservation.userId = int.Parse(Request.Form["userId"]);
             reservation.numberOfSeats = int.Parse(Request.Form["numberOfSeats"]);
             reservation.approved = int.Parse("0");
 
@@ -47,7 +47,7 @@ namespace AirplaneTicketsReservationApp.Pages.Visitor
                 connection.Open();
                 try
                 {
-                    String sql = "SELECT * from flight WHERE flightId = " + reservation.flightId;
+                    String sql = "SELECT * from flight WHERE id = " + reservation.flightId;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())

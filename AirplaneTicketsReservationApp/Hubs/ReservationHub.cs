@@ -10,9 +10,9 @@ namespace AirplaneTicketsReservationApp.Hubs
     public class ReservationHub: Hub
     {
 
-        public Task SendReservation(string user, Reservation _reservation)
+        public Task SendReservation(Reservation _reservation)
         {
-            return Clients.All.SendAsync("ReceiveMessage", user, _reservation);
+            return Clients.All.SendAsync("ReceiveMessage", _reservation);
         }
 
         public async Task NewReservationReceived(Reservation _reservation)

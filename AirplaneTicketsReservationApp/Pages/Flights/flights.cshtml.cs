@@ -14,9 +14,11 @@ namespace AirplaneTicketsReservationApp.Pages.Flights
     public class flightsModel : PageModel
     {
         public List<Flight> flightList = new List<Flight>();
+        public string userType;
 
         public void OnGet()
         {
+            userType = HttpContext.User.FindFirst("Type")?.Value;
             try
             {
                 string connectionString = "Data Source=.\\SQLEXPRESS2;Initial Catalog=airlineDB;Integrated Security=True";

@@ -84,6 +84,23 @@ namespace AirplaneTicketsReservationApp.Pages.Account
                                     return RedirectToPage("/Index");
                                 }
 
+                                if (user.username == userType.username && user.password == userType.password && user.type == UserTypeEnum.Visitor)
+                                {
+                                    userType = user;
+                                    var claims = new List<Claim> {
+                                        new Claim("ID", user.id.ToString()),
+                                        //new Claim(ClaimTypes.Name, user.Name),
+                                        //new Claim(ClaimTypes.Surname, user.Surname),
+                                        new Claim("Type", "Visitor")
+                                    };
+                                    var identity = new ClaimsIdentity(claims, "AirlineCookieAuth");
+                                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+
+                                    await HttpContext.SignInAsync("AirlineCookieAuth", claimsPrincipal);
+
+                                    return RedirectToPage("/Index");
+                                }
+
                                 //userList.Add(user);
                             }
                         }

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -31,10 +32,32 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-page="/Flights/flights">Flights</a></li>
-                    <li><a asp-page="/Account/Login">Login</a></li>
-                    <li><a asp-page="/Visitor/Browse">Browse flights</a></li>
-                    <li><a asp-page="/Flights/Rezervations">Reservations</a></li>
-                    <li><a asp-page="/Visitor/VisitorPage">My reservations</a></li>
+                    @*@if (User.IsInRole("Admin") || User.IsInRole("Agent") || User.IsInRole("Visitor"))
+                    {*@
+                        <li><a asp-page="/Account/Logout">Logout</a></li>
+
+                    @*}
+                    else
+                    {*@
+                        <li><a asp-page="/Account/Login">Login</a></li>
+
+                    @*}
+                    @if (User.IsInRole("Admin"))
+                    {*@
+                        <li><a asp-page="/Admin/AdminPage">Add new user</a></li>
+
+                    @*}
+                    @if (User.IsInRole("Visitor"))
+                    {*@
+                        <li><a asp-page="/Visitor/Browse">Browse flights</a></li>
+                        <li><a asp-page="/Visitor/VisitorPage">My reservations</a></li>
+
+                    @*}
+                    @if (User.IsInRole("Agent"))
+                    {*@
+                        <li><a asp-page="/Flights/Rezervations">Reservations</a></li>
+
+                    @*  }*@
                 </ul>
             </div>
         </div>

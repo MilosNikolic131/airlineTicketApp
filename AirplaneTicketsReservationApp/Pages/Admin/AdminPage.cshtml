@@ -1,0 +1,60 @@
+﻿@page
+@model AirplaneTicketsReservationApp.Pages.Admin.AdminPageModel
+@{
+    ViewData["Title"] = "Add new users";
+}
+
+<br />
+<h2>Add users</h2>
+
+<form method="post">
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">New user type</label>
+        <div class="col-sm-6">
+            <select name="Type">
+                <option value="Admin">Admin</option>
+                <option value="Agent">Agent</option>
+                <option value="Visitor">Visitor</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="name" value="@Model.userTable.Name" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Surname</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="surname" value="@Model.userTable.Surname" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Username</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="username" value="@Model.userTable.username" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Password</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="password" value="@Model.userTable.password" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="offset-mb-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
